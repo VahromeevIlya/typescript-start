@@ -31,3 +31,20 @@ function logBirthday({
 	}
 }
 logBirthday(userData);
+
+const departmens: string[] = ["dev", "design", "marketing"];
+
+const department = departmens[0];
+
+const nums: number[][] = [
+	[2, 3, 3],
+	[4, 5, 6],
+];
+
+const report = departmens
+	.filter((d: string) => d !== "dev")
+	.map((d: string) => `${d} - done`);
+
+const [first] = report;
+
+console.log(first);
