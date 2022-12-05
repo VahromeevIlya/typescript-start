@@ -1,50 +1,38 @@
-const isBirthday: boolean = true;
-const userName: string = "John";
-const age: number = 40;
-
-const userData = {
-	isBirthday: true,
-	userName: "John",
-	age: 40,
-	messages: { error: "Error" },
+const electricityUserData = {
+	readings: 95,
+	units: "kWt",
+	mode: "double",
 };
 
-const createError = (msg: string) => {
-	throw new Error(msg);
+const waterUserData = {
+	readings: 3,
+	units: "m3",
 };
 
-function logBirthday({
-	isBirthday,
-	userName,
-	age,
-	messages: { error },
-}: {
-	isBirthday: boolean;
-	userName: string;
-	age: number;
-	messages: { error: string };
-}): string {
-	if (isBirthday) {
-		return `Congrats ${userName} , your age: ${age + 1}`;
+const elRate = 0.45;
+const wRate = 2;
+
+const monthPayments = [0, 0]; // [electricity, water]
+
+const calculatePayments = (elData, wData, elRate, wRate) => {
+	if (elData.mode === "double" && elData.readings < 50) {
+		monthPayments[0] = elData.readings * elRate * 0.7;
 	} else {
-		return createError(error);
+		monthPayments[0] = elData.readings * elRate;
 	}
-}
-logBirthday(userData);
 
-const departmens: string[] = ["dev", "design", "marketing"];
+	monthPayments[1] = wData.readings * wRate;
+};
 
-const department = departmens[0];
+calculatePayments(electricityUserData, waterUserData, elRate, wRate);
 
-const nums: number[][] = [
-	[2, 3, 3],
-	[4, 5, 6],
-];
+const sendInvoice = (monthPayments, electricityUserData, waterUserData) => {
+	const text = `    Hello!
+    This month you used ${electricityUserData.readings} ${electricityUserData.units} of electricity
+    It will cost: ${monthPayments[0]}€
+    
+    This month you used ${waterUserData.readings} ${waterUserData.units} of water
+    It will cost: ${monthPayments[1]}€`;
 
-const report = departmens
-	.filter((d: string) => d !== "dev")
-	.map((d: string) => `${d} - done`);
-
-const [first] = report;
-
-console.log(first);
+	return text;
+};
