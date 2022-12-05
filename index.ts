@@ -30,3 +30,4 @@ function logBirthday({
 		return createError(error);
 	}
 }
+logBirthday(userData);
