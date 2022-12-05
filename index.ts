@@ -1,13 +1,15 @@
-const isBirthday: boolean = true;
-const userName: string = "John";
-const age: number = 40;
-
 const userData = {
 	isBirthday: true,
 	userName: "John",
 	age: 40,
 	messages: { error: "Error" },
 };
+
+const userDataTupple: [boolean, number, string] = [true, 40, "John"];
+
+const res = userDataTupple.map((d) => `${d} - done`);
+
+const [brithday, age, userName] = res;
 
 const createError = (msg: string) => {
 	throw new Error(msg);
