@@ -1,52 +1,36 @@
-const userData = {
-	isBirthday: true,
-	userName: "John",
-	age: 40,
-	messages: { error: "Error" },
-};
+const msg: "hello" = 'hello';
 
-const userDataTupple: [boolean, number, string] = [true, 40, "John"];
+const port3000: number = 3000;
+const port3001: number = 3001;
 
-const res = userDataTupple.map((d) => `${d} - done`);
-
-const [brithday, age, userName] = res;
-
-const createError = (msg: string) => {
-	throw new Error(msg);
-};
-
-function logBirthday({
-	isBirthday,
-	userName,
-	age,
-	messages: { error },
-}: {
-	isBirthday: boolean;
-	userName: string;
-	age: number;
-	messages: { error: string };
-}): string {
-	if (isBirthday) {
-		return `Congrats ${userName} , your age: ${age + 1}`;
+function startServer(
+	protocol: "http" | "https",
+	port: 3000 | 3001
+): "Server started" {
+	if (port === port3000 || port === port3001) {
+		console.log(`Server started on ${protocol}://server:${port}`);
 	} else {
-		return createError(error);
+		console.error("Invalid port");
 	}
+
+	return "Server started";
 }
-logBirthday(userData);
 
-const departmens: string[] = ["dev", "design", "marketing"];
+startServer("https", 3001);
 
-const department = departmens[0];
+function createAnimation(
+	id: string | number,
+	animName: string,
+	timingFunc: "ease" | "ease-out" | "ease-in" = "ease",
+	duration: number,
+	iterCount: "infinite" | number
+): void {
+	// const elem = document.querySelector(`#${id}`) as HTMLElement;
 
-const nums: number[][] = [
-	[2, 3, 3],
-	[4, 5, 6],
-];
+	// if (elem) {
+	console.log(`${animName} ${timingFunc} ${duration} ${iterCount}`);
+	// elem.style.animation = `${animName} ${timingFunc} ${duration} ${iterCount}`;
+	// }
+}
 
-const report = departmens
-	.filter((d: string) => d !== "dev")
-	.map((d: string) => `${d} - done`);
-
-const [first] = report;
-
-console.log(first);
+createAnimation("id", "fade", "ease-in", 5, "infinite");
