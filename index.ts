@@ -37,6 +37,7 @@ function checkReading(readings: {system: number} | {user: number}): void {
 	}
 }
 
+//exmple where we check x instance of Object
 function logValue(x: string | Date): void {
 	if(x instanceof Date) {
 		console.log(x.getDay());
