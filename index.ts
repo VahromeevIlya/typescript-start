@@ -49,4 +49,4 @@ const report = departmens
 
 const [first] = report;
 
-console.log(first);
+//prepare for lesson 21
