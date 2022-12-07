@@ -1,11 +1,21 @@
 const msg: "hello" = "hello";
 
-const serverConfing: { protocol: "http" | "https"; port: 3000 | 3001 } = {
+type Config = { protocol: "http" | "https"; port: 3000 | 3001 };
+type Role = {role: string};
+
+type ConfigWithRole = Config & Role;
+
+
+
+const serverConfing: ConfigWithRole = {
 	protocol: "http",
 	port: 3000,
+	role: 'admin',
 };
 
-const startServer: (protocol: "http" | "https", port: 3000 | 3001) => string = (
+type StartFunction = (protocol: "http" | "https", port: 3000 | 3001) => string
+
+const startServer: StartFunction = (
 	protocol: "http" | "https",
 	port: 3000 | 3001
 ): "Server started" => {
