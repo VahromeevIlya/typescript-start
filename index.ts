@@ -1,22 +1,19 @@
 const msg: "hello" = "hello";
 
-const port3000: number = 3000;
-const port3001: number = 3001;
+const serverConfing: { protocol: "http" | "https"; port: 3000 | 3001 } = {
+	protocol: "http",
+	port: 3000,
+};
 
-function startServer(
+const startServer: (protocol: "http" | "https", port: 3000 | 3001) => string = (
 	protocol: "http" | "https",
 	port: 3000 | 3001
-): "Server started" {
-	if (port === port3000 || port === port3001) {
-		console.log(`Server started on ${protocol}://server:${port}`);
-	} else {
-		console.error("Invalid port");
-	}
-
+): "Server started" => {
+	console.log(`Server started on ${protocol}://server:${port}`);
 	return "Server started";
-}
+};
 
-startServer("https", 3001);
+startServer(serverConfing.protocol, serverConfing.port);
 
 type AnimationFunctionTiming = "ease" | "ease-out" | "ease-in";
 type AnimationId = string | number;
