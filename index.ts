@@ -1,4 +1,4 @@
-const msg: "hello" = 'hello';
+const msg: "hello" = "hello";
 
 const port3000: number = 3000;
 const port3001: number = 3001;
@@ -18,10 +18,13 @@ function startServer(
 
 startServer("https", 3001);
 
+type AnimationFunctionTiming = "ease" | "ease-out" | "ease-in";
+type AnimationId = string | number;
+
 function createAnimation(
-	id: string | number,
+	id: AnimationId,
 	animName: string,
-	timingFunc: "ease" | "ease-out" | "ease-in" = "ease",
+	timingFunc: AnimationFunctionTiming = "ease",
 	duration: number,
 	iterCount: "infinite" | number
 ): void {
