@@ -1,53 +1,89 @@
-const userData = {
-	isBirthday: true,
-	userName: "John",
-	age: 40,
-	messages: { error: "Error" },
-};
+// структура данных склада с одеждой
+type ValidAmout = "empty" | number;
 
-const userDataTupple: [boolean, number, string] = [true, 40, "John"];
-
-const res = userDataTupple.map((d) => `${d} - done`);
-
-const [brithday, age, userName] = res;
-
-const createError = (msg: string) => {
-	throw new Error(msg);
-};
-
-function logBirthday({
-	isBirthday,
-	userName,
-	age,
-	messages: { error },
-}: {
-	isBirthday: boolean;
-	userName: string;
-	age: number;
-	messages: { error: string };
-}): string {
-	if (isBirthday) {
-		return `Congrats ${userName} , your age: ${age + 1}`;
-	} else {
-		return createError(error);
-	}
+interface ClothesWarehouse {
+	jackets: ValidAmout;
+	hats: ValidAmout;
+	socks: ValidAmout;
+	pants: ValidAmout;
 }
-logBirthday(userData);
 
-const departmens: string[] = ["dev", "design", "marketing"];
+// структура данных склада с канцтоварами
 
-const department = departmens[0];
+interface StationeryWarehouse {
+	scissors: ValidAmout;
+	paper: "empty" | boolean;
+}
 
-const nums: number[][] = [
-	[2, 3, 3],
-	[4, 5, 6],
-];
+// структура данных склада с бытовой техникой
 
-const report = departmens
-	.filter((d: string) => d !== "dev")
-	.map((d: string) => `${d} - done`);
+interface AppliancesWarehouse {
+	dishwashers: ValidAmout;
+	cookers: ValidAmout;
+	mixers: ValidAmout;
+}
 
-const [first] = report;
+// общая структура данных, наследует все данные из трех выше
+// + добавляет свои
 
-//prepare for lesson 21
-//finish 1/4
+interface TotalWarehouse
+	extends ClothesWarehouse,
+		StationeryWarehouse,
+		AppliancesWarehouse {
+	deficit: boolean;
+	date: Date;
+}
+
+// главный объект со всеми данными, должен подходить под формат TotalWarehouse
+
+const totalData: TotalWarehouse = {
+	jackets: 5,
+	hats: "empty",
+	socks: "empty",
+	pants: 15,
+	scissors: 15,
+	paper: true,
+	dishwashers: 3,
+	cookers: "empty",
+	mixers: 14,
+	deficit: false,
+	date: new Date(),
+};
+const totalData2: TotalWarehouse = {
+	jackets: 5,
+	hats: 5,
+	socks: 10,
+	pants: 15,
+	scissors: 15,
+	paper: true,
+	dishwashers: 3,
+	cookers: 12,
+	mixers: 14,
+	deficit: false,
+	date: new Date(),
+};
+
+// Реализуйте функцию, которая принимает в себя главный объект totalData нужного формата
+// и возвращает всегда строку
+// Функция должна отфильтровать данные из объекта и оставить только те названия товаров, у которых значение "empty"
+// и поместить их в эту строку. Если таких товаров нет - возвращается другая строка (см ниже)
+
+// С данным объектом totalData строка будет выглядеть:
+// "We need this items: hats, socks, cookers"
+// Товары через запятую, в конце её не должно быть. Пробел после двоеточия, в конце строки его нет.
+type Item = [string, number | boolean | "empty" | Date];
+
+function printReport(data: TotalWarehouse): string {
+	const empty: [string, "empty"][] = Object.entries(data).filter(
+		(item: Item) => item[1] === "empty"
+	);
+	if (empty.length) {
+		const items = empty.map((item) => item[0]);
+		return `We need this items: ${items.join(", ")}`;
+	}
+	console.log(typeof empty);
+	return "Everything fine";
+}
+
+console.log(printReport(totalData));
+console.log(printReport(totalData2));
