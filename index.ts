@@ -17,7 +17,11 @@ const user: User = {
 	addr: undefined,
 };
 
-const dbName = "12345";
+let dbName:string;
+setUserData(user,'q2331');
+console.log(dbName!);
+
 function setUserData(obj: User, db?: string): void {
-	console.log(obj.parents?.father?.toLowerCase(), db?.toLowerCase());
+	dbName = "12345";
+	console.log(obj.parents!.father?.toLowerCase(), db!.toLowerCase());
 }
