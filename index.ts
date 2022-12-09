@@ -52,3 +52,4 @@ const [first] = report;
 //prepare for lesson 21
 //finish 1/4
 //finish 26 lesson
+//finish 27 lesson
