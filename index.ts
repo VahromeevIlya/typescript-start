@@ -1,56 +1,70 @@
-const userData = {
-	isBirthday: true,
-	userName: "John",
-	age: 40,
-	messages: { error: "Error" },
-};
+// Перечисление с названием TypesOfMedia, которое включает строчные типы video, audio
 
-const userDataTupple: [boolean, number, string] = [true, 40, "John"];
-
-const res = userDataTupple.map((d) => `${d} - done`);
-
-const [brithday, age, userName] = res;
-
-const createError = (msg: string) => {
-	throw new Error(msg);
-};
-
-function logBirthday({
-	isBirthday,
-	userName,
-	age,
-	messages: { error },
-}: {
-	isBirthday: boolean;
-	userName: string;
-	age: number;
-	messages: { error: string };
-}): string {
-	if (isBirthday) {
-		return `Congrats ${userName} , your age: ${age + 1}`;
-	} else {
-		return createError(error);
-	}
+enum TypesOfMedia {
+	VIDEO = 'video',
+	AUDIO = 'audio',
 }
-logBirthday(userData);
 
-const departmens: string[] = ["dev", "design", "marketing"];
+// Перечисление с названием FormatsOfMedia, которое включает строчные видео-форматы: .mp4, .mov, .mkv, .flv, .webM
 
-const department = departmens[0];
+enum FormatsOfMedia {
+	MP4 = ".mp4",
+	MOV = ".mov",
+	MKV = ".mkv",
+	FLV = ".flv",
+	WEBM = ".webM",
+}
 
-const nums: number[][] = [
-	[2, 3, 3],
-	[4, 5, 6],
-];
+// Описание интерфейса, в котором:
+// name - строка
+// type - один из перечисления выше
+// format = один из перечисления выше
+// subtitles - необязательное поле типа строка
+// marks - необязательное поле неизвестного типа
 
-const report = departmens
-	.filter((d: string) => d !== "dev")
-	.map((d: string) => `${d} - done`);
+interface Play {
+	name: string;
+	type: TypesOfMedia;
+	format: FormatsOfMedia;
+	subtitles?: string;
+	marks?: unknown;
+}
 
-const [first] = report;
+function playMedia(
+	{ name, type, format, subtitles, marks }: Play = {
+		name: "example",
+		type: TypesOfMedia.VIDEO,
+		format: FormatsOfMedia.MP4,
+	}
+): string {
+	let marksLog: string;
 
-//prepare for lesson 21
-//finish 1/4
-//finish 26 lesson
-//finish 27 lesson
-//finish 33 lesson
+	if (marks && Array.isArray(marks)) {
+		const str: string = marks.reduce((a: string, b: string) => (a += `${b} `), "");
+		marksLog = str;
+	} else if (typeof marks === "string") {
+		marksLog = marks;
+	} else {
+		marksLog = "Unsupported type of marks";
+	}
+	// Создать функционал, что если marks - это массив, то "сложить" все эелементы в одну строку и поместить в marksLog
+	// Если это строка, то просто поместить её в marksLog
+	// Если что-то другое - то marksLog = "Unsupported type of marks"
+	// Не допускайте any!
+
+	console.log(`
+	 Media ${name}${format} is ${type}
+    Marks: ${marksLog}
+    Subtitles: ${subtitles ?? "none"}`);
+	// помните что это за оператор ??
+
+	return "Media started";
+}
+
+playMedia({
+	name: "WoW",
+	format: FormatsOfMedia.MOV,
+	type: TypesOfMedia.VIDEO,
+	subtitles: "hmhmhm hmhmhm doh",
+	marks: ["4:30", "5:40"],
+});
