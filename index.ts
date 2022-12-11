@@ -1,57 +1,38 @@
-const userData = {
-	isBirthday: true,
-	userName: "John",
-	age: 40,
-	messages: { error: "Error" },
+const fetchData = (url: string, method: "GET" | "POST"): void => {
+	console.log("Fetched");
 };
 
-const userDataTupple: [boolean, number, string] = [true, 40, "John"];
+//const reqOptions = {
+//	url: "https://someurl.com",
+//	method: "GET",
+//} as const;
 
-const res = userDataTupple.map((d) => `${d} - done`);
-
-const [brithday, age, userName] = res;
-
-const createError = (msg: string) => {
-	throw new Error(msg);
+const reqOptions = {
+	url: "https://someurl.com",
+	method: "GET",
 };
 
-function logBirthday({
-	isBirthday,
-	userName,
-	age,
-	messages: { error },
-}: {
-	isBirthday: boolean;
-	userName: string;
-	age: number;
-	messages: { error: string };
-}): string {
-	if (isBirthday) {
-		return `Congrats ${userName} , your age: ${age + 1}`;
-	} else {
-		return createError(error);
-	}
-}
-logBirthday(userData);
+fetchData("qqq", "GET");
+fetchData(reqOptions.url, <"GET">reqOptions.method);
 
-const departmens: string[] = ["dev", "design", "marketing"];
+const box = document.querySelector('.box') as HTMLElement;
+const input = document.querySelector('input') as HTMLInputElement;
 
-const department = departmens[0];
+const someNumber: number = input.value as any as number;
 
-const nums: number[][] = [
-	[2, 3, 3],
-	[4, 5, 6],
-];
 
-const report = departmens
-	.filter((d: string) => d !== "dev")
-	.map((d: string) => `${d} - done`);
+let a = 'value' as const;
 
-const [first] = report;
+let b = {
+	f:100
+} as const;
 
-//prepare for lesson 21
-//finish 1/4
-//finish 26 lesson
-//finish 27 lesson
-//finish 33 lesson
-//finish practice 4
+let c = [] as const;
+
+let value = 'value';
+let arr = ['sd','dff'];
+let obj = {f: 100};
+
+//let T0 = value as const;
+
+//let T5 = (Math.round(Math.random() * 1) ? 'yes' : 'no') as const;
