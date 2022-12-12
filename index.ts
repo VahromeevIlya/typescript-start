@@ -1,57 +1,35 @@
-const userData = {
-	isBirthday: true,
-	userName: "John",
-	age: 40,
-	messages: { error: "Error" },
-};
+//let num: Number = new Number(5);
+//let num2: number = 5;
+//let num3 = Number(5);
 
-const userDataTupple: [boolean, number, string] = [true, 40, "John"];
+//num = num2;
+//num2 = num;
 
-const res = userDataTupple.map((d) => `${d} - done`);
+const num = 5;
+const strNum: string = num.toString();
+const str = '5';
+const numStr: number = +str;
 
-const [brithday, age, userName] = res;
+interface Department {
+	name: string;
+	budget: number;
+}
 
-const createError = (msg: string) => {
-	throw new Error(msg);
-};
+const department = {
+	name: 'web-dev',
+	budget: 50000
+}
+interface Project {
+	name: string,
+	projectBudjet: number
+}
 
-function logBirthday({
-	isBirthday,
-	userName,
-	age,
-	messages: { error },
-}: {
-	isBirthday: boolean;
-	userName: string;
-	age: number;
-	messages: { error: string };
-}): string {
-	if (isBirthday) {
-		return `Congrats ${userName} , your age: ${age + 1}`;
-	} else {
-		return createError(error);
+
+function transformDepartment(department: Department, amout: number): Project {
+	return {
+		name: department.name,
+		projectBudjet: amout
 	}
 }
-logBirthday(userData);
 
-const departmens: string[] = ["dev", "design", "marketing"];
-
-const department = departmens[0];
-
-const nums: number[][] = [
-	[2, 3, 3],
-	[4, 5, 6],
-];
-
-const report = departmens
-	.filter((d: string) => d !== "dev")
-	.map((d: string) => `${d} - done`);
-
-const [first] = report;
-
-//prepare for lesson 21
-//finish 1/4
-//finish 26 lesson
-//finish 27 lesson
-//finish 33 lesson
-//finish practice 4
+const mainProject: Project = transformDepartment(department,4000);
