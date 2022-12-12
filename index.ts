@@ -1,57 +1,29 @@
-const userData = {
-	isBirthday: true,
-	userName: "John",
-	age: 40,
-	messages: { error: "Error" },
-};
+interface Square {
+	side: number;
+	area: number;
+}
+interface Rect {
+	a: number;
+	b: number;
+	area: number;
+}
 
-const userDataTupple: [boolean, number, string] = [true, 40, "John"];
+function calculateArea(side: number): Square;
+function calculateArea(a: number,b: number): Rect;
+function calculateArea(a: number, b?: number): Square | Rect {
+	if (b) {
+		const rect: Rect = {
+			a,
+			b,
+			area: a * b,
+		};
 
-const res = userDataTupple.map((d) => `${d} - done`);
-
-const [brithday, age, userName] = res;
-
-const createError = (msg: string) => {
-	throw new Error(msg);
-};
-
-function logBirthday({
-	isBirthday,
-	userName,
-	age,
-	messages: { error },
-}: {
-	isBirthday: boolean;
-	userName: string;
-	age: number;
-	messages: { error: string };
-}): string {
-	if (isBirthday) {
-		return `Congrats ${userName} , your age: ${age + 1}`;
+		return rect;
 	} else {
-		return createError(error);
+		const square: Square = {
+			side: a,
+			area: a * a,
+		};
+		return square;
 	}
 }
-logBirthday(userData);
-
-const departmens: string[] = ["dev", "design", "marketing"];
-
-const department = departmens[0];
-
-const nums: number[][] = [
-	[2, 3, 3],
-	[4, 5, 6],
-];
-
-const report = departmens
-	.filter((d: string) => d !== "dev")
-	.map((d: string) => `${d} - done`);
-
-const [first] = report;
-
-//prepare for lesson 21
-//finish 1/4
-//finish 26 lesson
-//finish 27 lesson
-//finish 33 lesson
-//finish practice 4
