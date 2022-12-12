@@ -1,57 +1,50 @@
-const userData = {
-	isBirthday: true,
-	userName: "John",
-	age: 40,
-	messages: { error: "Error" },
-};
-
-const userDataTupple: [boolean, number, string] = [true, 40, "John"];
-
-const res = userDataTupple.map((d) => `${d} - done`);
-
-const [brithday, age, userName] = res;
-
-const createError = (msg: string) => {
-	throw new Error(msg);
-};
-
-function logBirthday({
-	isBirthday,
-	userName,
-	age,
-	messages: { error },
-}: {
-	isBirthday: boolean;
-	userName: string;
-	age: number;
-	messages: { error: string };
-}): string {
-	if (isBirthday) {
-		return `Congrats ${userName} , your age: ${age + 1}`;
+function printMsg(msg: string[] | number | boolean): void {
+	if (Array.isArray(msg)) {
+		msg.forEach((m) => console.log(m));
+	} else if (isNumber(msg)) {
+		console.log(msg);
 	} else {
-		return createError(error);
+		console.log(msg);
 	}
 }
-logBirthday(userData);
+printMsg(4);
 
-const departmens: string[] = ["dev", "design", "marketing"];
+//function isNumber(n: string[] | number | boolean): n is number {
+//	return typeof n === "number";
+//}
+function isNumber(n: unknown): n is number {
+	return typeof n === "number";
+}
 
-const department = departmens[0];
+interface Car {
+	engine: string;
+	wheels: {
+		number: number;
+		type: string;
+	}
+}
 
-const nums: number[][] = [
-	[2, 3, 3],
-	[4, 5, 6],
-];
+interface Ship {
+	engine: string;
+	sail: string;
+}
 
-const report = departmens
-	.filter((d: string) => d !== "dev")
-	.map((d: string) => `${d} - done`);
+function repairVehicle(vehicle: Car | Ship) {
+	if(isCar(vehicle)) {
+		console.log(vehicle);
+	} else if(isShip(vehicle)) {
+		console.log(vehicle);
+	} else {
+		
+	}
 
-const [first] = report;
+}
 
-//prepare for lesson 21
-//finish 1/4
-//finish 26 lesson
-//finish 27 lesson
-//finish 33 lesson
-//finish practice 4
+function isCar(car: Car | Ship): car is Car {
+	//return "wheels" in car;
+	return (car as Car).wheels.number !== undefined;
+}
+function isShip(ship: Car | Ship): ship is Ship {
+	return "sail" in ship;
+	//return (car as Car).wheels.number !== undefined;
+}
