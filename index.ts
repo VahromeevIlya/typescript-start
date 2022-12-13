@@ -1,58 +1,57 @@
-const userData = {
-	isBirthday: true,
-	userName: "John",
-	age: 40,
-	messages: { error: "Error" },
-};
+// Request
 
-const userDataTupple: [boolean, number, string] = [true, 40, "John"];
+type Animal = "cat" | "dog" | "bird";
 
-const res = userDataTupple.map((d) => `${d} - done`);
+enum AnimalStatus {
+	Available = "available",
+	NotAvailable = "not available",
+}
 
-const [brithday, age, userName] = res;
+interface AnimalData {
+	animal: Animal;
+	breed: string;
+	sterilized?: string;
+}
+// Не повторяем код, используем extends
+interface AnimalAvailableData extends AnimalData {
+	location: string;
+	age?: number;
+}
 
-const createError = (msg: string) => {
-	throw new Error(msg);
-};
+interface AnimalNotAvailableData {
+	message: string;
+	nextUpdateIn: Date;
+}
 
-function logBirthday({
-	isBirthday,
-	userName,
-	age,
-	messages: { error },
-}: {
-	isBirthday: boolean;
-	userName: string;
-	age: number;
-	messages: { error: string };
-}): string {
-	if (isBirthday) {
-		return `Congrats ${userName} , your age: ${age + 1}`;
+// Интерфейсы стоит разделить, так как оба ответа будут иметь поле data
+// И только по статусу будет сложно определить данные
+
+interface AnimalAvailableResponse {
+	status: AnimalStatus.Available;
+	data: AnimalAvailableData;
+}
+
+interface AnimalNotAvailableResponse {
+	status: AnimalStatus.NotAvailable;
+	data: AnimalNotAvailableData;
+}
+
+// Response #1
+// Response #2
+type Res = AnimalAvailableResponse | AnimalNotAvailableResponse;
+
+function isAvailable(res: Res): res is AnimalAvailableResponse {
+	if (res.status === AnimalStatus.Available) {
+		return true;
 	} else {
-		return createError(error);
+		return false;
 	}
 }
-logBirthday(userData);
 
-const departmens: string[] = ["dev", "design", "marketing"];
-
-const department = departmens[0];
-
-const nums: number[][] = [
-	[2, 3, 3],
-	[4, 5, 6],
-];
-
-const report = departmens
-	.filter((d: string) => d !== "dev")
-	.map((d: string) => `${d} - done`);
-
-const [first] = report;
-
-//prepare for lesson 21
-//finish 1/4
-//finish 26 lesson
-//finish 27 lesson
-//finish 33 lesson
-//finish practice 4
-//finish 39
+function checkAnimalData(animal: Res): AnimalAvailableData | string {
+	if(isAvailable(animal)) {
+		return animal.data;
+	} else {
+		return `${animal.data.message}, you can try in ${animal.data.nextUpdateIn}`;
+	}
+}
