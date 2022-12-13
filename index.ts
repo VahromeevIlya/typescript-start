@@ -36,22 +36,10 @@ interface Airplane {
 	engine: string;
 	wings: string;
 }
-interface SuperAirplane {
-	name: "smth";
-	engine: string;
-	wings: string;
-}
 
-type Vehicle = Car | Ship | Airplane | SuperAirplane;
+type Vehicle = Car | Ship | Airplane;
 
 function repairVehicle(vehicle: Vehicle) {
-	//if(isCar(vehicle)) {
-	//	console.log(vehicle);
-	//} else if(isShip(vehicle)) {
-	//	console.log(vehicle);
-	//} else {
-	//	vehicle;
-	//}
 	switch (vehicle.name) {
 		case "car":
 			console.log(vehicle.wheels);
@@ -60,9 +48,6 @@ function repairVehicle(vehicle: Vehicle) {
 			console.log(vehicle.sail);
 			break;
 		case "airplane":
-			console.log(vehicle.wings);
-			break;
-		case "smth":
 			console.log(vehicle.wings);
 			break;
 		default:
