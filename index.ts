@@ -1,61 +1,27 @@
-const userData = {
-	isBirthday: true,
-	userName: "John",
-	age: 40,
-	messages: { error: "Error" },
-};
+type voidFunc = () => void;
 
-const userDataTupple: [boolean, number, string] = [true, 40, "John"];
-
-const res = userDataTupple.map((d) => `${d} - done`);
-
-const [brithday, age, userName] = res;
-
-const createError = (msg: string) => {
-	throw new Error(msg);
-};
-
-function logBirthday({
-	isBirthday,
-	userName,
-	age,
-	messages: { error },
-}: {
-	isBirthday: boolean;
-	userName: string;
-	age: number;
-	messages: { error: string };
-}): string {
-	if (isBirthday) {
-		return `Congrats ${userName} , your age: ${age + 1}`;
-	} else {
-		return createError(error);
-	}
+const returnString: voidFunc = () => {
+	return 'string';
 }
-logBirthday(userData);
 
-const departmens: string[] = ["dev", "design", "marketing"];
+console.log(returnString());
 
-const department = departmens[0];
 
-const nums: number[][] = [
-	[2, 3, 3],
-	[4, 5, 6],
-];
+const returnNumber: voidFunc = () => {
+	return 5;
+}
 
-const report = departmens
-	.filter((d: string) => d !== "dev")
-	.map((d: string) => `${d} - done`);
 
-const [first] = report;
+console.log(returnNumber());
 
-//prepare for lesson 21
-//finish 1/4
-//finish 26 lesson
-//finish 27 lesson
-//finish 33 lesson
-//finish practice 4
-//finish 39
-//finish 41
-//finish 42
-//finish 43
+function f2(): void {
+	return true
+}
+
+const f3 = function(): void {
+	return true
+}
+
+const names = ['alex','john'];
+
+names.forEach((name,index,arr) => arr.push('Hey'));
