@@ -1,64 +1,132 @@
-const userData = {
-	isBirthday: true,
-	userName: "John",
-	age: 40,
-	messages: { error: "Error" },
-};
+// Создать Generic-интерфейс PlayerData, который подходил бы для создания таких объектов:
 
-const userDataTupple: [boolean, number, string] = [true, 40, "John"];
-
-const res = userDataTupple.map((d) => `${d} - done`);
-
-const [brithday, age, userName] = res;
-
-const createError = (msg: string) => {
-	throw new Error(msg);
-};
-
-function logBirthday({
-	isBirthday,
-	userName,
-	age,
-	messages: { error },
-}: {
-	isBirthday: boolean;
-	userName: string;
-	age: number;
-	messages: { error: string };
-}): string {
-	if (isBirthday) {
-		return `Congrats ${userName} , your age: ${age + 1}`;
-	} else {
-		return createError(error);
-	}
+interface Hours {
+	total: number;
+	inMenu: number;
 }
-logBirthday(userData);
 
-const departmens: string[] = ["dev", "design", "marketing"];
+interface PlayerData<
+	G extends number | string,
+	H extends number | string | Hours
+> {
+	game: G;
+	hours: H;
+	server: string;
+}
 
-const department = departmens[0];
+const player1: PlayerData<string, number> = {
+	game: "CS:GO",
+	hours: 300,
+	server: "basic",
+};
 
-const nums: number[][] = [
-	[2, 3, 3],
-	[4, 5, 6],
+const player2: PlayerData<number, string> = {
+	game: 2048,
+	hours: "300 h.",
+	server: "arcade",
+};
+
+const player3: PlayerData<string, Hours> = {
+	game: "Chess",
+	hours: {
+		total: 500,
+		inMenu: 50,
+	},
+	server: "chess",
+};
+
+// Массив данных с фигурами содержит объекты, у каждого из которых обязательно есть свойство name
+// Каждый объект может еще содержать дополнительные свойства в случайном виде
+// Свойство name может иметь только 4 варианта
+// Функция calculateAmountOfFigures должна принимать массив с объектами, у которых обязательно должно быть свойство name
+// Возвращает она объект-экземпляр AmountOfFigures
+// Внутри себя подсчитывает сколько каких фигур было в массиве и записывает результаты в AmountOfFigures
+// С текущими данными в консоль должно попадать:
+// { squares: 3, circles: 2, triangles: 2, others: 1 }
+
+interface AmountOfFigures {
+	squares: number;
+	circles: number;
+	triangles: number;
+	others: number;
+}
+
+enum FigureNames {
+	RECT = "rect",
+	TRIANGLE = "triangle",
+	CIRCLE = "circle",
+	LINE = "line",
+}
+
+interface Figure {
+	name: FigureNames;
+}
+
+function calculateAmountOfFigures<T extends Figure>(
+	figure: T[]
+): AmountOfFigures {
+	let squares = 0;
+	let circles = 0;
+	let triangles = 0;
+	let others = 0;
+
+	figure.forEach((item) => {
+		switch (item.name) {
+			case FigureNames.RECT:
+				squares++;
+				break;
+			case FigureNames.TRIANGLE:
+				triangles++;
+				break;
+			case FigureNames.CIRCLE:
+				circles++;
+				break;
+			default:
+				others++;
+				break;
+		}
+	});
+
+	return {
+		squares,
+		circles,
+		triangles,
+		others,
+	};
+}
+
+const data = [
+	{
+		name: FigureNames.RECT,
+		data: { a: 5, b: 10 },
+	},
+	{
+		name: FigureNames.RECT,
+		data: { a: 6, b: 11 },
+	},
+	{
+		name: FigureNames.TRIANGLE,
+		data: { a: 5, b: 10, c: 14 },
+	},
+	{
+		name: FigureNames.LINE,
+		data: { l: 15 },
+	},
+	{
+		name: FigureNames.CIRCLE,
+		data: { r: 10 },
+	},
+	{
+		name: FigureNames.CIRCLE,
+		data: { r: 5 },
+	},
+	{
+		name: FigureNames.RECT,
+		data: { a: 15, b: 7 },
+	},
+	{
+		name: FigureNames.TRIANGLE,
+	},
 ];
 
-const report = departmens
-	.filter((d: string) => d !== "dev")
-	.map((d: string) => `${d} - done`);
-
-const [first] = report;
-
-//prepare for lesson 21
-//finish 1/4
-//finish 26 lesson
-//finish 27 lesson
-//finish 33 lesson
-//finish practice 4
-//finish 39
-//finish 41
-//finish 42
-//finish 43
-//finish 44
-//finish 46
-//finish 47 
+console.log(calculateAmountOfFigures(data));
