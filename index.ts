@@ -1,66 +1,57 @@
-const userData = {
-	isBirthday: true,
-	userName: "John",
-	age: 40,
-	messages: { error: "Error" },
-};
-
-const userDataTupple: [boolean, number, string] = [true, 40, "John"];
-
-const res = userDataTupple.map((d) => `${d} - done`);
-
-const [brithday, age, userName] = res;
-
-const createError = (msg: string) => {
-	throw new Error(msg);
-};
-
-function logBirthday({
-	isBirthday,
-	userName,
-	age,
-	messages: { error },
-}: {
-	isBirthday: boolean;
-	userName: string;
-	age: number;
-	messages: { error: string };
-}): string {
-	if (isBirthday) {
-		return `Congrats ${userName} , your age: ${age + 1}`;
-	} else {
-		return createError(error);
-	}
+interface IPhone {
+	company: string;
+	number: number;
 }
-logBirthday(userData);
 
-const departmens: string[] = ["dev", "design", "marketing"];
+// IMobilePhone должен наследоваться от IPhone,
+// тип свойства companyPartner зависит от свойства company
 
-const department = departmens[0];
+interface IMobilePhone {
+	size: string;
+	companyPartner: "same type as company in Phone";
+	manufactured: Date;
+}
 
-const nums: number[][] = [
-	[2, 3, 3],
-	[4, 5, 6],
+// Типизировать объект phones
+
+const phones = [
+	{
+		company: "Nokia",
+		number: 1285637,
+		size: "5.5",
+		companyPartner: "MobileNokia",
+		manufactured: new Date("2022-09-01"),
+	},
+	{
+		company: "Samsung",
+		number: 4356637,
+		size: "5.0",
+		companyPartner: "SamMobile",
+		manufactured: new Date("2021-11-05"),
+	},
+	{
+		company: "Apple",
+		number: 4552833,
+		size: "5.7",
+		companyPartner: "no data",
+		manufactured: new Date("2022-05-24T12:00:00"),
+	},
 ];
 
-const report = departmens
-	.filter((d: string) => d !== "dev")
-	.map((d: string) => `${d} - done`);
+interface IPhonesManufacturedAfterDate extends IMobilePhone {
+	initialDate: string;
+}
 
-const [first] = report;
+// Функция должна отфильтровать массив данных и вернуть новый массив
+// с телефонами, выпущенными после даты в третьем аргументе
 
-//prepare for lesson 21
-//finish 1/4
-//finish 26 lesson
-//finish 27 lesson
-//finish 33 lesson
-//finish practice 4
-//finish 39
-//finish 41
-//finish 42
-//finish 43
-//finish 44
-//finish 46
-//finish 47 
-//finish 50
-//finish 55
+function filterPhonesByDate(
+	phones: [],
+	key: string,
+	initial: string
+): IPhonesManufacturedAfterDate[] {}
+
+// Второй аргумент при вызове функции должен быть связан с первым,
+// а значит мы получим подсказки - свойства этого объекта
+
+console.log(filterPhonesByDate(phones, "manufactured", "2022-01-01"));
