@@ -8,13 +8,13 @@ interface IPhone {
 
 interface IMobilePhone extends IPhone {
 	size: string;
-	companyPartner: IPhone['company'];
+	companyPartner: IPhone["company"];
 	manufactured: Date;
 }
 
 // Типизировать объект phones
 
-const phones = [
+const phones: IMobilePhone[] = [
 	{
 		company: "Nokia",
 		number: 1285637,
@@ -45,11 +45,32 @@ interface IPhonesManufacturedAfterDate extends IMobilePhone {
 // Функция должна отфильтровать массив данных и вернуть новый массив
 // с телефонами, выпущенными после даты в третьем аргументе
 
-function filterPhonesByDate<T>(
-	phones: T,
-	key: string,
-	initial: string
-): IPhonesManufacturedAfterDate[] {}
+function filterPhonesByDate<
+	T extends IMobilePhone[],
+	S extends keyof IMobilePhone
+>(phones: T, key: S, initial: string): IPhonesManufacturedAfterDate[] {
+	const phonesMore: IMobilePhone[] = phones.filter(
+		(item) => {
+			const manufactured = item[key];
+			if (
+				manufactured instanceof Date &&
+				manufactured.getTime() > new Date(initial).getTime()
+			) {
+				return item;
+			}
+		}
+	);
+	
+	const newPhones: IPhonesManufacturedAfterDate[] = phonesMore.map((item) => {
+		const newItem: IPhonesManufacturedAfterDate = {
+			...item,
+			initialDate: initial,
+		};
+		return newItem;
+	});
+
+	return [...newPhones];
+}
 
 // Второй аргумент при вызове функции должен быть связан с первым,
 // а значит мы получим подсказки - свойства этого объекта
