@@ -6,9 +6,9 @@ interface IPhone {
 // IMobilePhone должен наследоваться от IPhone,
 // тип свойства companyPartner зависит от свойства company
 
-interface IMobilePhone {
+interface IMobilePhone extends IPhone {
 	size: string;
-	companyPartner: "same type as company in Phone";
+	companyPartner: IPhone['company'];
 	manufactured: Date;
 }
 
@@ -45,8 +45,8 @@ interface IPhonesManufacturedAfterDate extends IMobilePhone {
 // Функция должна отфильтровать массив данных и вернуть новый массив
 // с телефонами, выпущенными после даты в третьем аргументе
 
-function filterPhonesByDate(
-	phones: [],
+function filterPhonesByDate<T>(
+	phones: T,
 	key: string,
 	initial: string
 ): IPhonesManufacturedAfterDate[] {}
