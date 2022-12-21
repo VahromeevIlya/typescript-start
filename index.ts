@@ -1,67 +1,58 @@
-const userData = {
-	isBirthday: true,
-	userName: "John",
-	age: 40,
-	messages: { error: "Error" },
+type Example = "string" extends "Hellow" ? string : number;
+
+type FromUserOrFromBase<T extends string | number> = T extends string
+	? IDataFromUser
+	: IDataFromBases;
+
+interface IDataFromUser {
+	weight: string;
+}
+
+interface User<T extends "created" | Date> {
+	created: T extends "created" ? "created" : Date;
+}
+
+interface IDataFromBases {
+	calories: number;
+}
+
+const test: FromUserOrFromBase<string> = {
+	weight: "200",
 };
 
-const userDataTupple: [boolean, number, string] = [true, 40, "John"];
-
-const res = userDataTupple.map((d) => `${d} - done`);
-
-const [brithday, age, userName] = res;
-
-const createError = (msg: string) => {
-	throw new Error(msg);
+const user: User<"created"> = {
+	created: "created",
 };
 
-function logBirthday({
-	isBirthday,
-	userName,
-	age,
-	messages: { error },
-}: {
-	isBirthday: boolean;
-	userName: string;
-	age: number;
-	messages: { error: string };
-}): string {
-	if (isBirthday) {
-		return `Congrats ${userName} , your age: ${age + 1}`;
+//function calculateDailyCalories(str: string): IDataFromUser;
+//function calculateDailyCalories(num: number): IDataFromBases;
+function calculateDailyCalories<T extends string | number>(
+	numOrStr: T
+): T extends string ? IDataFromUser : IDataFromBases {
+	if (typeof numOrStr === "string") {
+		const obj: IDataFromUser = {
+			weight: numOrStr,
+		};
+		return obj as FromUserOrFromBase<T>;
 	} else {
-		return createError(error);
+		const obj: IDataFromBases = {
+			calories: numOrStr,
+		};
+		return obj as FromUserOrFromBase<T>;
 	}
 }
-logBirthday(userData);
 
-const departmens: string[] = ["dev", "design", "marketing"];
+type GetStringType<T extends "hello" | "world" | string> = T extends "hello"
+	? "hello"
+	: T extends "world"
+	? "world"
+	: string;
 
-const department = departmens[0];
+//вытащим первый элемент массива
+type GetFirstType<T> = T extends Array<infer First> ? First : T;
 
-const nums: number[][] = [
-	[2, 3, 3],
-	[4, 5, 6],
-];
+type Ex = GetFirstType<number[]>;
 
-const report = departmens
-	.filter((d: string) => d !== "dev")
-	.map((d: string) => `${d} - done`);
+type ToArray<Type> = Type extends any ? Type[] : never;
 
-const [first] = report;
-
-//prepare for lesson 21
-//finish 1/4
-//finish 26 lesson
-//finish 27 lesson
-//finish 33 lesson
-//finish practice 4
-//finish 39
-//finish 41
-//finish 42
-//finish 43
-//finish 44
-//finish 46
-//finish 47 
-//finish 50
-//finish 55
-//finish 56
+type ExArray = ToArray<Ex | string>;
