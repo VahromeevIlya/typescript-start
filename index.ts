@@ -1,68 +1,37 @@
-const userData = {
-	isBirthday: true,
-	userName: "John",
-	age: 40,
-	messages: { error: "Error" },
+type Currencies = {
+	usa: "usd";
+	readonly china: "cny";
+	ukraine: "uah";
+	kz?: "tenge";
 };
 
-const userDataTupple: [boolean, number, string] = [true, 40, "John"];
-
-const res = userDataTupple.map((d) => `${d} - done`);
-
-const [brithday, age, userName] = res;
-
-const createError = (msg: string) => {
-	throw new Error(msg);
+type CreateCustomCurr<T> = {
+	-readonly [P in keyof T]-?: string;
 };
 
-function logBirthday({
-	isBirthday,
-	userName,
-	age,
-	messages: { error },
-}: {
-	isBirthday: boolean;
-	userName: string;
-	age: number;
-	messages: { error: string };
-}): string {
-	if (isBirthday) {
-		return `Congrats ${userName} , your age: ${age + 1}`;
-	} else {
-		return createError(error);
-	}
-}
-logBirthday(userData);
+type ROnlyCurr = Readonly<Currencies>;
 
-const departmens: string[] = ["dev", "design", "marketing"];
+type CustomCurrencies = CreateCustomCurr<Currencies>;
 
-const department = departmens[0];
+//type CustomCurrencies = {
+//	usa: string;
+//	china: string;
+//	ukraine: string;
+//	kz: string;
+//};
 
-const nums: number[][] = [
-	[2, 3, 3],
-	[4, 5, 6],
-];
+//type СопоставимыйТип = {
+//	[произвольныйИндетификатор in Множество]: ПроизвольныйТипДанных;
+//}
 
-const report = departmens
-	.filter((d: string) => d !== "dev")
-	.map((d: string) => `${d} - done`);
+type Keys = "name" | "age" | "role";
 
-const [first] = report;
+type User = {
+	[K in Keys]: string;
+};
 
-//prepare for lesson 21
-//finish 1/4
-//finish 26 lesson
-//finish 27 lesson
-//finish 33 lesson
-//finish practice 4
-//finish 39
-//finish 41
-//finish 42
-//finish 43
-//finish 44
-//finish 46
-//finish 47 
-//finish 50
-//finish 55
-//finish 56
-//finish 58
+const alex: User = {
+	name: "Alex",
+	age: "25",
+	role: "admin",
+};
