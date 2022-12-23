@@ -7,7 +7,24 @@ interface IForm {
 // Учтите, что данные в форме могут расширяться и эти поля
 // должны появиться и в объекте валидации
 
-const validationData = {
+//type Valid = {
+//	isValid: boolean;
+//	errorMsg?: string;
+//};
+
+//type ValidationData = Record<keyof IForm, Valid>;
+
+//const validationData: ValidationData = {
+//	login: { isValid: false, errorMsg: "At least 3 characters" },
+//	password: { isValid: true },
+//};
+
+
+const validationData: Validation<IForm> = {
 	login: { isValid: false, errorMsg: "At least 3 characters" },
 	password: { isValid: true },
+};
+
+type Validation<T> = {
+	[P in keyof T]: { isValid: true } | { isValid: false; errorMsg: string };
 };
