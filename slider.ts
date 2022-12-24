@@ -24,17 +24,24 @@ createSlider();
 // Необходимо типизировать объект настроек, который будет зависим
 // от интерфейса ISlider
 // Все поля в нем обязательны для заполнения
-const customSliderOptions = {
+
+interface ICustomSlider extends Required<Omit<ISlider,'speed'>> {
+	speed: number;
+}
+const customSliderOptions: ICustomSlider = {
 	container: "id",
 	numberOfSlides: 4,
 	speed: 1100,
 	direction: "horizontal",
 	dots: true,
 	arrows: true,
+	animationName: 'fade',
 };
 
-function createCustomSlider(options: any): void {
+function createCustomSlider(options: ICustomSlider): void {
 	if ("container" in options) {
 		console.log(options);
 	}
 }
+
+createCustomSlider(customSliderOptions);
