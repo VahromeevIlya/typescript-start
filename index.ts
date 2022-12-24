@@ -11,29 +11,35 @@ interface Club {
 	location: string;
 	classes: Classes[];
 	futureClasses: FutureClasses[];
+	currClients: Clients[];
+	exClients: ExClients[];
+	futureClients: FutureClients[];
 }
 
 type Classes = {
 	name: string;
 	startsAt: string;
 	duration: number;
-}
+};
 
-type FutureClasses = Omit<Classes, 'startsAt'> & {
+type FutureClasses = Omit<Classes, "startsAt"> & {
 	willStartsAt: string;
 };
 
 type Clients = {
-	name: string,
-	age: string | number,
-	gender: string,
-	timeLeft: string,
-}
-type ExClients = Omit<Clients,'timeLeft'> & {
-	makeCallFor: Date
+	name: string;
+	age: string | number;
+	gender: string;
+	timeLeft: string;
+};
+type ExClients = Omit<Clients, "timeLeft"> & {
+	makeCallFor: Date;
+};
+type FutureClients = Pick<Clients, "name"> & {
+	makeCallFor: Date;
 };
 
-const fitnessClubCenter = {
+const fitnessClubCenter: Club = {
 	clubName: "Fitness club Center",
 	location: "central ave. 45, 5th floor",
 	classes: [
