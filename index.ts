@@ -6,6 +6,20 @@
 // Простыми словами: при добавлении свойства в целевой объект они должны быть
 // автоматически добавлены в зависимые (сразу подсказка от TS)
 
+interface Club {
+	clubName: string;
+	location: string;
+	classes: Classes[]
+}
+
+type Classes = {
+	name: string;
+	startsAt: string;
+	duration: number;
+}
+
+type FutureClasses = string;
+
 const fitnessClubCenter = {
 	clubName: "Fitness club Center",
 	location: "central ave. 45, 5th floor",
