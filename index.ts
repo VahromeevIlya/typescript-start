@@ -9,7 +9,8 @@
 interface Club {
 	clubName: string;
 	location: string;
-	classes: Classes[]
+	classes: Classes[];
+	futureClasses: FutureClasses[];
 }
 
 type Classes = {
@@ -18,7 +19,19 @@ type Classes = {
 	duration: number;
 }
 
-type FutureClasses = string;
+type FutureClasses = Omit<Classes, 'startsAt'> & {
+	willStartsAt: string;
+};
+
+type Clients = {
+	name: string,
+	age: string | number,
+	gender: string,
+	timeLeft: string,
+}
+type ExClients = Omit<Clients,'timeLeft'> & {
+	makeCallFor: Date
+};
 
 const fitnessClubCenter = {
 	clubName: "Fitness club Center",
