@@ -1,71 +1,51 @@
-const userData = {
-	isBirthday: true,
-	userName: "John",
-	age: 40,
-	messages: { error: "Error" },
-};
+const jsonTest = `{ "name": "Test", "data": "4"}`;
 
-const userDataTupple: [boolean, number, string] = [true, 40, "John"];
-
-const res = userDataTupple.map((d) => `${d} - done`);
-
-const [brithday, age, userName] = res;
-
-const createError = (msg: string) => {
-	throw new Error(msg);
-};
-
-function logBirthday({
-	isBirthday,
-	userName,
-	age,
-	messages: { error },
-}: {
-	isBirthday: boolean;
-	userName: string;
-	age: number;
-	messages: { error: string };
-}): string {
-	if (isBirthday) {
-		return `Congrats ${userName} , your age: ${age + 1}`;
-	} else {
-		return createError(error);
-	}
+interface JSONtest {
+	name: string;
+	data: number;
 }
-logBirthday(userData);
 
-const departmens: string[] = ["dev", "design", "marketing"];
+const objFromJson: JSONtest = JSON.parse(jsonTest);
 
-const department = departmens[0];
+let toDoList: ToDo[] = [];
 
-const nums: number[][] = [
-	[2, 3, 3],
-	[4, 5, 6],
-];
+interface ToDo {
+	userId: number;
+	id: number;
+	title: string;
+	completed: boolean;
+}
 
-const report = departmens
-	.filter((d: string) => d !== "dev")
-	.map((d: string) => `${d} - done`);
+//fetch("https://jsonplaceholder.typicode.com/todos/1")
+//	.then((r) => r.json())
+//	.then((json) => {
+//		if ("id" in json) {
+//			toDoList.push(json);
+//		}
+//		console.log(toDoList);
+//	})
+//	.catch((error) => {
+//		console.log(error);
+//	});
 
-const [first] = report;
+fetch("https://jsonplaceholder.typicode.com/todos")
+	.then((r) => r.json())
+	.then((json) => {
+		if ("id" in json) {
+			toDoList.push(json);
+		} else if (Array.isArray(json)) {
+			toDoList = json;
+		}
+		console.log(toDoList);
+	})
+	.catch((error) => {
+		console.log(error);
+	});
 
-//prepare for lesson 21
-//finish 1/4
-//finish 26 lesson
-//finish 27 lesson
-//finish 33 lesson
-//finish practice 4
-//finish 39
-//finish 41
-//finish 42
-//finish 43
-//finish 44
-//finish 46
-//finish 47 
-//finish 50
-//finish 55
-//finish 56
-//finish 58
-//finish 59
-//finish 60
-//finish 61
+const promise = new Promise<string>((resolve, reject) => {
+	resolve("test");
+});
+
+promise.then((value) => {
+	console.log(value.toLowerCase());
+});
